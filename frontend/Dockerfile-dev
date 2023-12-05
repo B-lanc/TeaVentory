@@ -1,0 +1,4 @@
+FROM node:21-bookworm as build
+WORKDIR /app
+EXPOSE 80
+CMD ["npm", "run", "dev", "--", "--port", "80", "--host"]
