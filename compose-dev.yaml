@@ -9,6 +9,18 @@ services:
       - "./frontend:/app"
     networks:
       tea-dev:
+    depends_on:
+      - backend-dev
+  backend-dev:
+    build: ./backend
+    volumes:
+      - ./backend:/app
+    ports:
+      - 8090:8090
+    networks:
+      tea-dev:
+        aliases:
+          - backend
 
 
 networks:
