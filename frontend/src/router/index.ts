@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
+import pb from '@/pocketbaseConnection'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,8 +23,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from) => {
-  //TODO: implement checking if it's logged in
-  if (to.name !== 'login') {
+  if (to.name !== 'login' && !pb.authStore.isValid) {
     return { name: 'login' }
   }
 })
