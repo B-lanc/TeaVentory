@@ -12,13 +12,10 @@ const navigateToHome = () => {
   router.push({ name: 'home' })
 }
 const loginButtonPress = async () => {
-  console.log(pb)
   try {
     const authdata = await pb.collection('users').authWithPassword(username.value, password.value)
-    console.log(pb)
-    console.log(authdata)
-  } catch(e) {
-    console.log(e)
+    navigateToHome()
+  } catch (e) {
     loginFailMessage.value = 'Username or Password is Incorrect, Please try again!'
   }
 }
