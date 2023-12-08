@@ -8,12 +8,12 @@ const records = ref()
 const activeCreateOverlay = ref(false)
 
 const newRecordSchema = ref({
-  inventory_id: '',
+  inv_id: '',
   name: '',
-  supplier: '',
   size: 0,
-  stock: 0,
   unit: '',
+  stock: 0,
+  supplier: '',
   delivery_duration: 0,
   delivery_delay: 0
 })
@@ -24,15 +24,20 @@ const toggleOverlay = () => {
 onMounted(async () => {
   try {
     records.value = await pb.collection('inventory').getList(1, 50, {})
-    console.log(records.value)
   } catch (e) {
     records.value = ''
     errorMessage.value = 'Could not load the inventory'
   }
 })
 
-const createRecord = () => {
-  //TODO
+const createRecord = async () => {
+  try {
+    const newRecord = await pb.collection('inventory').create(newRecordSchema.value)
+    records.value.items.push(newRecord)
+  } catch (e){
+    alert(`Failed to submit data.... ${e}`)
+  }
+  activeCreateOverlay.value = false
 }
 </script>
 
@@ -108,7 +113,7 @@ const createRecord = () => {
           <input
             type="text"
             class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
-            v-model="newRecordSchema.inventory_id"
+            v-model="newRecordSchema.inv_id"
             placeholder="inventory id"
           />
         </div>
@@ -155,6 +160,7 @@ const createRecord = () => {
             v-model="newRecordSchema.supplier"
             rows="5"
             cols="33"
+            placeholder="address"
           />
         </div>
         <div class="mx-2">
