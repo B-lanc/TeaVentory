@@ -1,3 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import NavBar from '@/components/NavBar.vue'
+import { RouterView } from 'vue-router'
+</script>
 
-<template>GENERAL KENOBI</template>
+<template>
+  <div class="flex flex-row">
+    <NavBar class="flex-initial"></NavBar>
+    <RouterView class="flex-auto" />
+  </div>
+</template>

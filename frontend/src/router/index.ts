@@ -2,6 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
 import pb from '@/pocketbaseConnection'
+import Dashboard from '@/components/Dashboard.vue'
+import Inventory from '@/components/Inventory.vue'
+import Employees from '@/components/Employees.vue'
+import Report from '@/components/Report.vue'
+import Settings from '@/components/Settings.vue'
+import Help from '@/components/Help.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,7 +15,39 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      children: [
+        {
+          path: '/',
+          name: 'dashboard',
+          component: Dashboard
+        },
+        {
+          path: 'inventory',
+          name: 'inventory',
+          component: Inventory
+        },
+        {
+          path: 'employees',
+          name: 'employees',
+          component: Employees
+        },
+        {
+          path: 'report',
+          name: 'report',
+          component: Report
+        },
+        {
+          path: 'settings',
+          name: 'settings',
+          component: Settings
+        },
+        {
+          path: 'help',
+          name: 'help',
+          component: Help
+        }
+      ]
     },
     {
       path: '/login',
@@ -22,7 +60,7 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from) => {
+router.beforeEach((to) => {
   if (to.name !== 'login' && !pb.authStore.isValid) {
     return { name: 'login' }
   }
