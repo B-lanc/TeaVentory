@@ -26,7 +26,6 @@ const createRecord = () => {
 
 <template>
   <div class="flex flex-col">
-    <CreateOverlay :toggle="toggleOverlay" :onClick="createRecord" v-if="activeCreateOverlay" />
     <div class="flex justify-between font-serif">
       <h2 class="px-7 py-7 text-3xl">Inventory</h2>
       <div class="my-auto">
@@ -65,5 +64,13 @@ const createRecord = () => {
         {{ errorMessage }}
       </div>
     </div>
+    <Transition>
+      <CreateOverlay
+        :toggle="toggleOverlay"
+        :createButton="createRecord"
+        v-if="activeCreateOverlay"
+      >
+      </CreateOverlay
+    ></Transition>
   </div>
 </template>

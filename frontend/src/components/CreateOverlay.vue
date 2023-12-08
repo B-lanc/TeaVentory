@@ -1,11 +1,11 @@
 <script setup lang="ts">
 const props = defineProps<{
-  onClick: () => void
+  createButton: () => void
   toggle: () => void
 }>()
 const createRecord = () => {
   //TODO
-  props.onClick()
+  props.createButton()
 }
 const cancel = () => {
   props.toggle()
@@ -13,15 +13,13 @@ const cancel = () => {
 </script>
 
 <template>
-  <div
-    @click="toggle()"
-    class="fixed left-0 top-0 z-10 h-screen w-screen bg-black bg-opacity-40"
-  ></div>
-  <div class="fixed right-0 z-20 h-screen bg-white">
-    <slot></slot>
-    <div>
-      <button @click="cancel()" class="rounded-md bg-slate-50 text-black">cancel</button>
-      <button @click="createRecord()" class="rounded-md bg-red-950 text-white">create</button>
+  <div @click="toggle()" class="fixed left-0 top-0 z-10 h-screen w-screen bg-black bg-opacity-40">
+    <div class="fixed right-0 z-20 h-screen bg-white">
+      <slot></slot>
+      <div>
+        <button @click="cancel()" class="rounded-md bg-slate-50 text-black">cancel</button>
+        <button @click="createRecord()" class="rounded-md bg-red-950 text-white">create</button>
+      </div>
     </div>
   </div>
 </template>
