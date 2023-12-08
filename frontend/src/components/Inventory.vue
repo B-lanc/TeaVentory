@@ -103,7 +103,7 @@ const createRecord = async () => {
           <div class="col-span-1 my-auto">
             <div>
               <button
-                class="my-auto w-10/12 rounded-sm bg-green-400 hover:bg-green-600 hover:text-white"
+                class="my-auto w-10/12 rounded-sm bg-green-400 transition-colors hover:bg-green-600 hover:text-white"
               >
                 Edit
               </button>
@@ -111,7 +111,7 @@ const createRecord = async () => {
             <div>
               <button
                 @click="deleteOverlayInit(item.id, item.inv_id, item.name)"
-                class="my-auto w-10/12 rounded-sm bg-red-400 hover:bg-red-700 hover:text-white"
+                class="my-auto w-10/12 rounded-sm bg-red-400 transition-colors hover:bg-red-700 hover:text-white"
               >
                 Delete
               </button>

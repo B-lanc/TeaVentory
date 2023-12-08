@@ -19,13 +19,13 @@ const props = defineProps<{
       </div>
       <div class="absolute bottom-2 left-0 right-0 flex justify-center">
         <button
-          class="m-4 h-12 w-24 rounded-sm bg-gray-300 text-black hover:bg-gray-200"
+          class="m-4 h-12 w-24 rounded-sm bg-gray-300 text-black transition-colors hover:bg-gray-200"
           @click="toggle()"
         >
           No
         </button>
         <button
-          class="m-4 h-12 w-24 rounded-sm bg-red-950 text-white hover:bg-red-600"
+          class="m-4 h-12 w-24 rounded-sm bg-red-950 text-white transition-colors hover:bg-red-600"
           @click="confirm()"
         >
           Yes
