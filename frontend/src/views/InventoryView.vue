@@ -87,6 +87,7 @@ const createRecord = async () => {
         </div>
         <div
           v-for="(item, index) in records.items"
+          :key="item.id"
           class="grid grid-cols-12 border-x-2 border-b-2 border-black py-1 font-mono font-light"
           :class="index % 2 ? 'bg-blue-100' : 'bg-blue-50'"
         >
