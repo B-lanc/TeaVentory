@@ -6,6 +6,18 @@ import { ref, onMounted } from 'vue'
 const errorMessage = ref('Loading... Please Wait')
 const records = ref()
 const activeCreateOverlay = ref(false)
+
+const newRecordSchema = ref({
+  inventory_id: '',
+  name: '',
+  supplier: '',
+  size: 0,
+  stock: 0,
+  unit: '',
+  delivery_duration: 0,
+  delivery_delay: 0
+})
+
 const toggleOverlay = () => {
   activeCreateOverlay.value = !activeCreateOverlay.value
 }
@@ -91,7 +103,78 @@ const createRecord = () => {
     </div>
     <Transition>
       <CreateOverlay :toggle="toggleOverlay" :confirm="createRecord" v-if="activeCreateOverlay">
-      </CreateOverlay
+        <div class="mx-2">
+          <label class="block">Inventory ID:</label>
+          <input
+            type="text"
+            class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
+            v-model="newRecordSchema.inventory_id"
+            placeholder="inventory id"
+          />
+        </div>
+        <div class="mx-2">
+          <label class="block">Name:</label>
+          <input
+            type="text"
+            class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
+            v-model="newRecordSchema.name"
+            placeholder="item name"
+          />
+        </div>
+        <div class="mx-2">
+          <label class="block">Size:</label>
+          <input
+            type="number"
+            class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
+            v-model="newRecordSchema.size"
+            placeholder="item size"
+          />
+        </div>
+        <div class="mx-2">
+          <label class="block">Stock:</label>
+          <input
+            type="number"
+            class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
+            v-model="newRecordSchema.stock"
+            placeholder="stock count"
+          />
+        </div>
+        <div class="mx-2">
+          <label class="block">Unit:</label>
+          <input
+            type="text"
+            class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
+            v-model="newRecordSchema.unit"
+            placeholder="unit"
+          />
+        </div>
+        <div class="mx-2">
+          <label class="block">Supplier address and phone:</label>
+          <textarea
+            class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
+            v-model="newRecordSchema.supplier"
+            rows="5"
+            cols="33"
+          />
+        </div>
+        <div class="mx-2">
+          <label class="block">Delivery time (day):</label>
+          <input
+            type="number"
+            class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
+            v-model="newRecordSchema.delivery_duration"
+            placeholder="delivery time"
+          />
+        </div>
+        <div class="mx-2">
+          <label class="block">Estimated delay (day):</label>
+          <input
+            type="number"
+            class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
+            v-model="newRecordSchema.delivery_delay"
+            placeholder="delivery delay"
+          />
+        </div> </CreateOverlay
     ></Transition>
   </div>
 </template>
