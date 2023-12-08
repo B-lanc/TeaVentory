@@ -22,7 +22,13 @@ const deleteOverlayInit = (id: string, inv_id: string, name: string) => {
   deleteOverlayMessage.value = `Would you like to delete the item "${name}" with ID: "${inv_id}"`
   deleteOverlayActive.value = true
   deleteOverlayFunction.value = () => {
-    pb.collection('inventory').delete(id)
+    try {
+      pb.collection('inventory').delete(id)
+      records.value.items = records.value.items.filter((item: any) => item.id !== id)
+      deleteOverlayToggle()
+    } catch (e) {
+      alert('Could not delete record')
+    }
   }
 }
 
