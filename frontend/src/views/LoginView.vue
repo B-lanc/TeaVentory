@@ -13,7 +13,7 @@ const navigateToHome = () => {
 }
 const loginButtonPress = async () => {
   try {
-    const authdata = await pb.collection('users').authWithPassword(username.value, password.value)
+    await pb.collection('users').authWithPassword(username.value, password.value)
     navigateToHome()
   } catch (e) {
     loginFailMessage.value = 'Username or Password is Incorrect, Please try again!'
@@ -41,6 +41,7 @@ const loginButtonPress = async () => {
           class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
           v-model="password"
           placeholder="password"
+          @keyup.enter="loginButtonPress()"
         />
       </div>
       <div class="mt-5">
