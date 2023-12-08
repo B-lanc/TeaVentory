@@ -40,24 +40,37 @@ const createRecord = () => {
     <div class="h-full w-full bg-blue-50 px-5 text-center">
       <div v-if="records">
         <div class="grid grid-cols-12 border-2 border-black bg-blue-200">
-          <h4 class="col-span-2 py-1 hover:cursor-pointer hover:bg-blue-400">Inventory ID</h4>
-          <h4 class="col-span-2 py-1 hover:cursor-pointer hover:bg-blue-400">Name</h4>
-          <h4 class="col-span-1 py-1 hover:cursor-pointer hover:bg-blue-400">Size</h4>
-          <h4 class="col-span-1 py-1 hover:cursor-pointer hover:bg-blue-400">Stock</h4>
-          <h4 class="col-span-1 py-1 hover:cursor-pointer hover:bg-blue-400">Unit</h4>
-          <h4 class="col-span-5 py-1 hover:cursor-pointer hover:bg-blue-400">Supplier</h4>
+          <div class="col-span-3 m-auto py-1">
+            <div class="border-b border-black">Name</div>
+            <div>SKU</div>
+          </div>
+          <h4 class="col-span-3 m-auto py-1">Supplier</h4>
+          <h4 class="col-span-1 m-auto py-1">Size</h4>
+          <h4 class="col-span-1 m-auto py-1">Stock</h4>
+          <h4 class="col-span-1 m-auto py-1">Unit</h4>
+          <h4 class="col-span-1 m-auto py-1">Delivery Duration (day)</h4>
+          <h4 class="col-span-1 m-auto py-1">Estimated Delay (day)</h4>
+          <h4 class="col-span-1 m-auto py-1">Action</h4>
         </div>
         <div
           v-for="(item, index) in records.items"
-          class="grid grid-cols-12 border-x-2 border-b-2 border-black py-1 font-mono font-light hover:bg-blue-400"
+          class="grid grid-cols-12 border-x-2 border-b-2 border-black py-1 font-mono font-light"
           :class="index % 2 ? 'bg-blue-100' : 'bg-blue-50'"
         >
-          <h4 class="col-span-2">{{ item.inv_id }}</h4>
-          <h4 class="col-span-2">{{ item.name }}</h4>
-          <h4 class="col-span-1">{{ item.size }}</h4>
-          <h4 class="col-span-1">{{ item.stock }}</h4>
-          <h4 class="col-span-1">{{ item.unit }}</h4>
-          <h4 class="col-span-5">{{ item.supplier }}</h4>
+          <div class="col-span-3 m-auto">
+            <div class="border-b border-black">{{ item.name }}</div>
+            <div>{{ item.inv_id }}</div>
+          </div>
+          <h4 class="col-span-3 m-auto">{{ item.supplier }}</h4>
+          <h4 class="col-span-1 m-auto">{{ item.size }}</h4>
+          <h4 class="col-span-1 m-auto">{{ item.stock }}</h4>
+          <h4 class="col-span-1 m-auto">{{ item.unit }}</h4>
+          <h4 class="col-span-1 m-auto">{{ item.delivery_duration }}</h4>
+          <h4 class="col-span-1 m-auto">{{ item.delivery_delay }}</h4>
+          <div class="col-span-1 my-auto">
+            <div><button class="bg-green-400 w-10/12 hover:bg-green-600 my-auto rounded-sm">Edit</button></div>
+            <div><button class="bg-red-400 w-10/12 hover:bg-red-700 my-auto rounded-sm">Delete</button></div>
+          </div>
         </div>
       </div>
       <div v-else>
@@ -65,11 +78,7 @@ const createRecord = () => {
       </div>
     </div>
     <Transition>
-      <CreateOverlay
-        :toggle="toggleOverlay"
-        :confirm="createRecord"
-        v-if="activeCreateOverlay"
-      >
+      <CreateOverlay :toggle="toggleOverlay" :confirm="createRecord" v-if="activeCreateOverlay">
       </CreateOverlay
     ></Transition>
   </div>
