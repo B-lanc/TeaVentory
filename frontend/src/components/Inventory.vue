@@ -64,7 +64,7 @@ const createRecord = async () => {
       <div class="my-auto">
         <button
           @click="toggleOverlay()"
-          class="mr-4 rounded-md bg-red-400 px-4 py-4 hover:bg-red-500"
+          class="mr-4 rounded-md bg-red-400 px-4 py-4 transition-colors hover:bg-red-500"
         >
           CREATE NEW RECORD
         </button>
