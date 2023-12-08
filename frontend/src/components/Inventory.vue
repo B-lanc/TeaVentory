@@ -1,11 +1,30 @@
 <script setup lang="ts">
 import pb from '@/pocketbaseConnection'
 import CreateOverlay from './CreateOverlay.vue'
+import ConfirmOverlay from './ConfirmOverlay.vue'
 import { ref, onMounted } from 'vue'
 
 const errorMessage = ref('Loading... Please Wait')
 const records = ref()
+
 const activeCreateOverlay = ref(false)
+const toggleOverlay = () => {
+  activeCreateOverlay.value = !activeCreateOverlay.value
+}
+
+const deleteOverlayActive = ref(false)
+const deleteOverlayMessage = ref('')
+const deleteOverlayFunction = ref(() => {})
+const deleteOverlayToggle = () => {
+  deleteOverlayActive.value = !deleteOverlayActive.value
+}
+const deleteOverlayInit = (id: string, inv_id: string, name: string) => {
+  deleteOverlayMessage.value = `Would you like to delete the item "${name}" with ID: "${inv_id}"`
+  deleteOverlayActive.value = true
+  deleteOverlayFunction.value = () => {
+    pb.collection('inventory').delete(id)
+  }
+}
 
 const newRecordSchema = ref({
   inv_id: '',
@@ -18,9 +37,6 @@ const newRecordSchema = ref({
   delivery_delay: 0
 })
 
-const toggleOverlay = () => {
-  activeCreateOverlay.value = !activeCreateOverlay.value
-}
 onMounted(async () => {
   try {
     records.value = await pb.collection('inventory').getList(1, 50, {})
@@ -34,7 +50,7 @@ const createRecord = async () => {
   try {
     const newRecord = await pb.collection('inventory').create(newRecordSchema.value)
     records.value.items.push(newRecord)
-  } catch (e){
+  } catch (e) {
     alert(`Failed to submit data.... ${e}`)
   }
   activeCreateOverlay.value = false
@@ -94,6 +110,7 @@ const createRecord = async () => {
             </div>
             <div>
               <button
+                @click="deleteOverlayInit(item.id, item.inv_id, item.name)"
                 class="my-auto w-10/12 rounded-sm bg-red-400 hover:bg-red-700 hover:text-white"
               >
                 Delete
@@ -182,5 +199,15 @@ const createRecord = async () => {
           />
         </div> </CreateOverlay
     ></Transition>
+
+    <!-- Delete overlay -->
+    <Transition>
+      <ConfirmOverlay
+        v-if="deleteOverlayActive"
+        :toggle="deleteOverlayToggle"
+        :confirm="deleteOverlayFunction"
+        :message="deleteOverlayMessage"
+      />
+    </Transition>
   </div>
 </template>

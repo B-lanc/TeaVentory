@@ -22,7 +22,7 @@ const cancel = () => {
       <div class="flex justify-center">
         <button
           @click="cancel()"
-          class="m-4 h-9 w-16 rounded-sm bg-gray-300 text-black hover:bg-gray-500"
+          class="m-4 h-9 w-16 rounded-sm bg-gray-300 text-black hover:bg-gray-200"
         >
           cancel
         </button>
