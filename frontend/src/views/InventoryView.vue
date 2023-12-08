@@ -1,16 +1,36 @@
 <script setup lang="ts">
 import pb from '@/pocketbaseConnection'
-import CreateOverlay from '@/components/SidebarOverlay.vue'
+import SidebarOverlay from '@/components/SidebarOverlay.vue'
 import ConfirmOverlay from '@/components/ConfirmOverlay.vue'
 import { ref, onMounted } from 'vue'
 
 const errorMessage = ref('Loading... Please Wait')
 const records = ref()
+const RecordSchema = ref({
+  inv_id: '',
+  name: '',
+  size: 0,
+  unit: '',
+  stock: 0,
+  supplier: '',
+  delivery_duration: 0,
+  delivery_delay: 0
+})
 
-const activeCreateOverlay = ref(false)
-const toggleOverlay = () => {
-  activeCreateOverlay.value = !activeCreateOverlay.value
+const createOverlayActive = ref(false)
+const createOverlayToggle = () => {
+  createOverlayActive.value = !createOverlayActive.value
 }
+const createRecord = async () => {
+  try {
+    const newRecord = await pb.collection('inventory').create(RecordSchema.value)
+    records.value.items.push(newRecord)
+  } catch (e) {
+    alert(`Failed to submit data.... ${e}`)
+  }
+  createOverlayActive.value = false
+}
+
 
 const deleteOverlayActive = ref(false)
 const deleteOverlayMessage = ref('')
@@ -32,16 +52,6 @@ const deleteOverlayInit = (id: string, inv_id: string, name: string) => {
   }
 }
 
-const newRecordSchema = ref({
-  inv_id: '',
-  name: '',
-  size: 0,
-  unit: '',
-  stock: 0,
-  supplier: '',
-  delivery_duration: 0,
-  delivery_delay: 0
-})
 
 onMounted(async () => {
   try {
@@ -52,15 +62,6 @@ onMounted(async () => {
   }
 })
 
-const createRecord = async () => {
-  try {
-    const newRecord = await pb.collection('inventory').create(newRecordSchema.value)
-    records.value.items.push(newRecord)
-  } catch (e) {
-    alert(`Failed to submit data.... ${e}`)
-  }
-  activeCreateOverlay.value = false
-}
 </script>
 
 <template>
@@ -69,7 +70,7 @@ const createRecord = async () => {
       <h2 class="px-7 py-7 text-3xl">Inventory</h2>
       <div class="my-auto">
         <button
-          @click="toggleOverlay()"
+          @click="createOverlayToggle()"
           class="mr-4 rounded-md bg-red-400 px-4 py-4 transition-colors hover:bg-red-500"
         >
           CREATE NEW RECORD
@@ -130,14 +131,20 @@ const createRecord = async () => {
         {{ errorMessage }}
       </div>
     </div>
+
+    <!-- Create Overlay -->
     <Transition>
-      <CreateOverlay :toggle="toggleOverlay" :confirm="createRecord" v-if="activeCreateOverlay">
+      <SidebarOverlay
+        :toggle="createOverlayToggle"
+        :confirm="createRecord"
+        v-if="createOverlayActive"
+      >
         <div class="mx-2">
           <label class="block">Inventory ID:</label>
           <input
             type="text"
             class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
-            v-model="newRecordSchema.inv_id"
+            v-model="RecordSchema.inv_id"
             placeholder="inventory id"
           />
         </div>
@@ -146,7 +153,7 @@ const createRecord = async () => {
           <input
             type="text"
             class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
-            v-model="newRecordSchema.name"
+            v-model="RecordSchema.name"
             placeholder="item name"
           />
         </div>
@@ -155,7 +162,7 @@ const createRecord = async () => {
           <input
             type="number"
             class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
-            v-model="newRecordSchema.size"
+            v-model="RecordSchema.size"
             placeholder="item size"
           />
         </div>
@@ -164,7 +171,7 @@ const createRecord = async () => {
           <input
             type="number"
             class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
-            v-model="newRecordSchema.stock"
+            v-model="RecordSchema.stock"
             placeholder="stock count"
           />
         </div>
@@ -173,7 +180,7 @@ const createRecord = async () => {
           <input
             type="text"
             class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
-            v-model="newRecordSchema.unit"
+            v-model="RecordSchema.unit"
             placeholder="unit"
           />
         </div>
@@ -181,7 +188,7 @@ const createRecord = async () => {
           <label class="block">Supplier address and phone:</label>
           <textarea
             class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
-            v-model="newRecordSchema.supplier"
+            v-model="RecordSchema.supplier"
             rows="5"
             cols="33"
             placeholder="address"
@@ -192,7 +199,7 @@ const createRecord = async () => {
           <input
             type="number"
             class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
-            v-model="newRecordSchema.delivery_duration"
+            v-model="RecordSchema.delivery_duration"
             placeholder="delivery time"
           />
         </div>
@@ -201,10 +208,10 @@ const createRecord = async () => {
           <input
             type="number"
             class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
-            v-model="newRecordSchema.delivery_delay"
+            v-model="RecordSchema.delivery_delay"
             placeholder="delivery delay"
           />
-        </div> </CreateOverlay
+        </div> </SidebarOverlay
     ></Transition>
 
     <!-- Delete overlay -->
