@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import pb from '@/pocketbaseConnection'
-import CreateOverlay from '@/components/CreateOverlay.vue'
+import CreateOverlay from '@/components/SidebarOverlay.vue'
 import ConfirmOverlay from '@/components/ConfirmOverlay.vue'
 import { ref, onMounted } from 'vue'
 

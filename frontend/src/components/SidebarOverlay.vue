@@ -4,7 +4,6 @@ const props = defineProps<{
   toggle: () => void
 }>()
 const createRecord = () => {
-  //TODO
   props.confirm()
 }
 const cancel = () => {
