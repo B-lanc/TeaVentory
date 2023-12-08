@@ -23,7 +23,7 @@ const loginButtonPress = async () => {
 
 <template>
   <div class="flex h-screen items-center justify-center bg-slate-100">
-    <div class="h-1/2 w-96 rounded-md bg-white px-8 py-12">
+    <div class="w-96 rounded-md bg-white px-8 py-12">
       <h1 class="pb-5 text-center text-4xl font-bold">Login Page</h1>
       <div>
         <label class="block">Username:</label>
