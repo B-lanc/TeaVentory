@@ -2,12 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
 import Inventory from '@/views/InventoryView.vue'
+import Dashboard from '@/views/DashboardView.vue'
+import Employees from '@/views/EmployeesView.vue'
+import Report from '@/views/ReportView.vue'
+import Settings from '@/views/SettingsView.vue'
+import Help from '@/views/HelpView.vue'
 import pb from '@/pocketbaseConnection'
-import Dashboard from '@/components/Dashboard.vue'
-import Employees from '@/components/Employees.vue'
-import Report from '@/components/Report.vue'
-import Settings from '@/components/Settings.vue'
-import Help from '@/components/Help.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
