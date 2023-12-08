@@ -17,13 +17,13 @@ onMounted(async () => {
 
 <template>
   <div class="flex flex-col">
-    <div class="flex h-12 justify-between px-3 py-2 font-serif">
+    <div class="flex justify-between px-7 py-7 font-serif">
       <h2 class="text-3xl">Inventory</h2>
       <div>Something else idk</div>
     </div>
     <div class="h-full w-full bg-blue-50 px-5 text-center">
       <div v-if="records">
-        <div class="grid grid-cols-12 border border-black bg-blue-200">
+        <div class="grid grid-cols-12 border-2 border-black bg-blue-200">
           <h4 class="col-span-2 py-1 hover:cursor-pointer hover:bg-blue-400">Inventory ID</h4>
           <h4 class="col-span-2 py-1 hover:cursor-pointer hover:bg-blue-400">Name</h4>
           <h4 class="col-span-1 py-1 hover:cursor-pointer hover:bg-blue-400">Size</h4>
@@ -33,7 +33,7 @@ onMounted(async () => {
         </div>
         <div
           v-for="(item, index) in records.items"
-          class="grid grid-cols-12 border-x border-b border-black py-1 font-mono font-light hover:bg-blue-400"
+          class="grid grid-cols-12 border-x-2 border-b-2 border-black py-1 font-mono font-light hover:bg-blue-400"
           :class="index % 2 ? 'bg-blue-100' : 'bg-blue-50'"
         >
           <h4 class="col-span-2">{{ item.inv_id }}</h4>
