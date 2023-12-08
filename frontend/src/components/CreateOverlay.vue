@@ -1,11 +1,11 @@
 <script setup lang="ts">
 const props = defineProps<{
-  createButton: () => void
+  confirm: () => void
   toggle: () => void
 }>()
 const createRecord = () => {
   //TODO
-  props.createButton()
+  props.confirm()
 }
 const cancel = () => {
   props.toggle()
