@@ -67,7 +67,7 @@ const createRecord = () => {
     <Transition>
       <CreateOverlay
         :toggle="toggleOverlay"
-        :createButton="createRecord"
+        :confirm="createRecord"
         v-if="activeCreateOverlay"
       >
       </CreateOverlay
