@@ -5,7 +5,7 @@ import { RouterView } from 'vue-router'
 
 <template>
   <div class="flex flex-row">
-    <NavBar class="flex-initial"></NavBar>
+    <NavBar class="flex-none"></NavBar>
     <RouterView class="flex-auto" />
   </div>
 </template>
