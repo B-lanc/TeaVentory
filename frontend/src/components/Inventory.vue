@@ -68,8 +68,20 @@ const createRecord = () => {
           <h4 class="col-span-1 m-auto">{{ item.delivery_duration }}</h4>
           <h4 class="col-span-1 m-auto">{{ item.delivery_delay }}</h4>
           <div class="col-span-1 my-auto">
-            <div><button class="bg-green-400 w-10/12 hover:bg-green-600 my-auto rounded-sm">Edit</button></div>
-            <div><button class="bg-red-400 w-10/12 hover:bg-red-700 my-auto rounded-sm">Delete</button></div>
+            <div>
+              <button
+                class="my-auto w-10/12 rounded-sm bg-green-400 hover:bg-green-600 hover:text-white"
+              >
+                Edit
+              </button>
+            </div>
+            <div>
+              <button
+                class="my-auto w-10/12 rounded-sm bg-red-400 hover:bg-red-700 hover:text-white"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       </div>
