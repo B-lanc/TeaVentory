@@ -40,7 +40,7 @@ watch(
     <nav class="flex flex-col px-3 font-sans text-lg font-light">
       <RouterLink
         v-for="route in routes"
-        class="my-1 rounded-sm px-3 transition hover:font-semibold"
+        class="my-1 rounded-sm px-3 transition hover:font-semibold hover:shadow-md"
         :class="[
           route.isActive
             ? ['bg-orange-300', 'hover:bg-orange-200']
@@ -51,7 +51,7 @@ watch(
         >{{ route.name }}</RouterLink
       >
       <button
-        class="mt-7 bg-red-400 px-3 text-left hover:bg-red-500 hover:font-semibold"
+        class="mt-7 bg-red-400 px-3 text-left font-semibold hover:bg-red-500 hover:font-bold hover:shadow-md"
         @click="logout()"
       >
         Logout
