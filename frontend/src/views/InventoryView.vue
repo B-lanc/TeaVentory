@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import pb from '@/pocketbaseConnection'
-import CreateOverlay from './CreateOverlay.vue'
-import ConfirmOverlay from './ConfirmOverlay.vue'
+import CreateOverlay from '@/components/CreateOverlay.vue'
+import ConfirmOverlay from '@/components/ConfirmOverlay.vue'
 import { ref, onMounted } from 'vue'
 
 const errorMessage = ref('Loading... Please Wait')
