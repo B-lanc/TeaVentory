@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import InputComponent from './InputComponent.vue'
-import TextAreaComponent from './TextAreaComponent.vue'
+import TextAreaComponent from './InputComponentTextArea.vue'
 defineProps<{
   inv_id: string
   name: string
