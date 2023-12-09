@@ -113,7 +113,7 @@ const editOverlayInit = (item: any) => {
 
 onMounted(async () => {
   try {
-    records.value = await pb.collection('inventory').getList(1, 50, {})
+    records.value = await pb.collection('inventory').getList(1, 500, {})
   } catch (e) {
     records.value = ''
     errorMessage.value = 'Could not load the inventory'
