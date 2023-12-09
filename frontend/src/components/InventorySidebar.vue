@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import InputComponent from './InputComponent.vue'
 import TextAreaComponent from './InputComponentTextArea.vue'
+import SelectComponent from './InputComponentSelect.vue'
 defineProps<{
   inv_id: string
   name: string
@@ -43,13 +44,12 @@ defineProps<{
       :value="stock"
       @update="(value) => $emit('stock', value)"
     ></InputComponent>
-    <InputComponent
+    <SelectComponent
       label="Unit"
-      placeholder="unit"
-      type="text"
+      :options="['gram', 'ml', 'pcs', 'slice']"
       :value="unit"
       @update="(value) => $emit('unit', value)"
-    ></InputComponent>
+    />
     <TextAreaComponent
       label="Supplier address and phone"
       placeholder="address"
