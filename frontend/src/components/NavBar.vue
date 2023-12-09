@@ -13,10 +13,11 @@ const logout = () => {
 const routes = ref([
   { id: 0, name: 'Dashboard', link: '/', isActive: false },
   { id: 1, name: 'Inventory', link: '/inventory', isActive: false },
-  { id: 2, name: 'Report', link: '/report', isActive: false },
-  { id: 3, name: 'Employees', link: '/employees', isActive: false },
-  { id: 4, name: 'Settings', link: '/settings', isActive: false },
-  { id: 5, name: 'Help', link: '/help', isActive: false }
+  { id: 2, name: 'Management', link: '/management', isActive: false },
+  { id: 3, name: 'Report', link: '/report', isActive: false },
+  { id: 4, name: 'Employees', link: '/employees', isActive: false },
+  { id: 5, name: 'Settings', link: '/settings', isActive: false },
+  { id: 6, name: 'Help', link: '/help', isActive: false }
 ])
 
 watch(

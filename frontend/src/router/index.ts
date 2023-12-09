@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
 import Inventory from '@/views/InventoryView.vue'
+import Management from '@/views/ManagementView.vue'
 import Dashboard from '@/views/DashboardView.vue'
 import Employees from '@/views/EmployeesView.vue'
 import Report from '@/views/ReportView.vue'
@@ -26,6 +27,11 @@ const router = createRouter({
           path: 'inventory',
           name: 'inventory',
           component: Inventory
+        },
+        {
+          path: 'management',
+          name: 'management',
+          component: Management
         },
         {
           path: 'employees',
