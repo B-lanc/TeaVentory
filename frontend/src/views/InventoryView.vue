@@ -65,10 +65,51 @@ const deleteOverlayInit = (id: string, inv_id: string, name: string) => {
 
 const editOverlayActive = ref(false)
 const editOverlayFunction = ref(() => {})
+const EditRecordSchema = ref({
+  inv_id: '',
+  name: '',
+  size: 0,
+  unit: '',
+  stock: 0,
+  supplier: '',
+  delivery_duration: 0,
+  delivery_delay: 0
+})
 const editOverlayToggle = () => {
   editOverlayActive.value = !editOverlayActive.value
 }
-const editOverlayInit = (item: any) => {}
+const editOverlayInit = (item: any) => {
+  editOverlayActive.value = true
+  EditRecordSchema.value.inv_id = item.inv_id
+  EditRecordSchema.value.name = item.name
+  EditRecordSchema.value.size = item.size
+  EditRecordSchema.value.stock = item.stock
+  EditRecordSchema.value.unit = item.unit
+  EditRecordSchema.value.supplier = item.supplier
+  EditRecordSchema.value.delivery_duration = item.delivery_duration
+  EditRecordSchema.value.delivery_delay = item.delivery_delay
+  editOverlayFunction.value = () => {
+    try {
+      pb.collection('inventory').update(item.id, EditRecordSchema.value)
+      records.value.items = records.value.items.map((it: any) => {
+        if (it.id === item.id) {
+          it.inv_id = EditRecordSchema.value.inv_id
+          it.name = EditRecordSchema.value.name
+          it.size = EditRecordSchema.value.size
+          it.stock = EditRecordSchema.value.stock
+          it.unit = EditRecordSchema.value.unit
+          it.supplier = EditRecordSchema.value.supplier
+          it.delivery_duration = EditRecordSchema.value.delivery_duration
+          it.delivery_delay = EditRecordSchema.value.delivery_delay
+        }
+        return it
+      })
+      editOverlayToggle()
+    } catch (e) {
+      alert('Could not edit record')
+    }
+  }
+}
 
 onMounted(async () => {
   try {
@@ -187,5 +228,34 @@ onMounted(async () => {
         :message="deleteOverlayMessage"
       />
     </Transition>
+
+    <!-- Edit overlay -->
+    <Transition>
+      <SidebarOverlay
+        title="Edit record"
+        :toggle="editOverlayToggle"
+        :confirm="editOverlayFunction"
+        v-if="editOverlayActive"
+      >
+        <InventorySidebar
+          :inv_id="EditRecordSchema.inv_id"
+          @inv_id="(val) => (EditRecordSchema.inv_id = val)"
+          :name="EditRecordSchema.name"
+          @name="(val) => (EditRecordSchema.name = val)"
+          :size="EditRecordSchema.size"
+          @size="(val) => (EditRecordSchema.size = val)"
+          :stock="EditRecordSchema.stock"
+          @stock="(val) => (EditRecordSchema.stock = val)"
+          :unit="EditRecordSchema.unit"
+          @unit="(val) => (EditRecordSchema.unit = val)"
+          :address="EditRecordSchema.supplier"
+          @address="(val) => (EditRecordSchema.supplier = val)"
+          :delivery_duration="EditRecordSchema.delivery_duration"
+          @delivery_duration="(val) => (EditRecordSchema.delivery_duration = val)"
+          :delivery_delay="EditRecordSchema.delivery_delay"
+          @delivery_delay="(val) => (EditRecordSchema.delivery_delay = val)"
+        >
+        </InventorySidebar> </SidebarOverlay
+    ></Transition>
   </div>
 </template>
