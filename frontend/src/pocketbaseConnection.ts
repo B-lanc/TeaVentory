@@ -1,7 +1,7 @@
 import PocketBase from 'pocketbase'
 
-//TODO: somehow properly implement production env, where the url is the backend url
-const url = `http://localhost:8090`
+console.log(import.meta.env.VITE_DOMAIN_NAME)
+const url = `http://${import.meta.env.VITE_DOMAIN_NAME || "localhost"}:8090`
 const pb = new PocketBase(url)
 
 export default pb

@@ -1,6 +1,9 @@
 services:
   frontend:
-    build: ./frontend
+    build: 
+      context : ./frontend
+      args:
+        DOMAIN_NAME : ${DOMAIN_NAME}
     ports: 
       - 8080:80
     depends_on:
