@@ -122,7 +122,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="flex flex-col h-screen">
+  <div class="flex h-screen flex-col">
     <div class="flex justify-between font-serif">
       <h2 class="px-7 py-7 text-3xl">Inventory</h2>
       <div class="my-auto">
@@ -134,7 +134,7 @@ onMounted(async () => {
         </button>
       </div>
     </div>
-    <div class="h-full w-full bg-blue-50 px-5 text-center overflow-auto">
+    <div class="h-full w-full overflow-auto bg-blue-50 px-5 text-center">
       <div v-if="records" class="text-md sm:text-xs md:text-sm">
         <div class="grid grid-cols-12 border-2 border-black bg-blue-200">
           <div class="col-span-3 m-auto py-1">
