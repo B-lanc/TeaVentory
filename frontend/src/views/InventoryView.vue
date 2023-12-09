@@ -2,6 +2,7 @@
 import pb from '@/pocketbaseConnection'
 import SidebarOverlay from '@/components/SidebarOverlay.vue'
 import ConfirmOverlay from '@/components/ConfirmOverlay.vue'
+import InventorySidebar from '@/components/InventorySidebar.vue'
 import { ref, onMounted } from 'vue'
 
 const errorMessage = ref('Loading... Please Wait')
@@ -14,9 +15,9 @@ const RecordSchema = ref({
   stock: 0,
   supplier: '',
   delivery_duration: 0,
-  delivery_delay: 0,
+  delivery_delay: 0
 })
-const RecordSchemaZeroer = ()=>{
+const RecordSchemaZeroer = () => {
   RecordSchema.value.inv_id = ''
   RecordSchema.value.name = ''
   RecordSchema.value.size = 0
@@ -42,7 +43,6 @@ const createRecord = async () => {
   RecordSchemaZeroer()
 }
 
-
 const deleteOverlayActive = ref(false)
 const deleteOverlayMessage = ref('')
 const deleteOverlayFunction = ref(() => {})
@@ -63,6 +63,12 @@ const deleteOverlayInit = (id: string, inv_id: string, name: string) => {
   }
 }
 
+const editOverlayActive = ref(false)
+const editOverlayFunction = ref(() => {})
+const editOverlayToggle = () => {
+  editOverlayActive.value = !editOverlayActive.value
+}
+const editOverlayInit = (item: any) => {}
 
 onMounted(async () => {
   try {
@@ -72,7 +78,6 @@ onMounted(async () => {
     errorMessage.value = 'Could not load the inventory'
   }
 })
-
 </script>
 
 <template>
@@ -89,7 +94,7 @@ onMounted(async () => {
       </div>
     </div>
     <div class="h-full w-full bg-blue-50 px-5 text-center">
-      <div v-if="records" class="sm:text-xs md:text-sm text-md">
+      <div v-if="records" class="text-md sm:text-xs md:text-sm">
         <div class="grid grid-cols-12 border-2 border-black bg-blue-200">
           <div class="col-span-3 m-auto py-1">
             <div class="border-b border-black">Name</div>
@@ -122,6 +127,7 @@ onMounted(async () => {
           <div class="col-span-1 my-auto">
             <div>
               <button
+                @click="editOverlayInit(item)"
                 class="my-auto w-10/12 rounded-sm bg-green-400 transition-colors hover:bg-green-600 hover:text-white"
               >
                 Edit
@@ -146,83 +152,30 @@ onMounted(async () => {
     <!-- Create Overlay -->
     <Transition>
       <SidebarOverlay
+        title="Create New Record"
         :toggle="createOverlayToggle"
         :confirm="createRecord"
         v-if="createOverlayActive"
       >
-        <div class="mx-2">
-          <label class="block">Inventory ID:</label>
-          <input
-            type="text"
-            class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
-            v-model="RecordSchema.inv_id"
-            placeholder="inventory id"
-          />
-        </div>
-        <div class="mx-2">
-          <label class="block">Name:</label>
-          <input
-            type="text"
-            class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
-            v-model="RecordSchema.name"
-            placeholder="item name"
-          />
-        </div>
-        <div class="mx-2">
-          <label class="block">Size:</label>
-          <input
-            type="number"
-            class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
-            v-model="RecordSchema.size"
-            placeholder="item size"
-          />
-        </div>
-        <div class="mx-2">
-          <label class="block">Stock:</label>
-          <input
-            type="number"
-            class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
-            v-model="RecordSchema.stock"
-            placeholder="stock count"
-          />
-        </div>
-        <div class="mx-2">
-          <label class="block">Unit:</label>
-          <input
-            type="text"
-            class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
-            v-model="RecordSchema.unit"
-            placeholder="unit"
-          />
-        </div>
-        <div class="mx-2">
-          <label class="block">Supplier address and phone:</label>
-          <textarea
-            class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
-            v-model="RecordSchema.supplier"
-            rows="5"
-            cols="33"
-            placeholder="address"
-          />
-        </div>
-        <div class="mx-2">
-          <label class="block">Delivery time (day):</label>
-          <input
-            type="number"
-            class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
-            v-model="RecordSchema.delivery_duration"
-            placeholder="delivery time"
-          />
-        </div>
-        <div class="mx-2">
-          <label class="block">Estimated delay (day):</label>
-          <input
-            type="number"
-            class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
-            v-model="RecordSchema.delivery_delay"
-            placeholder="delivery delay"
-          />
-        </div> </SidebarOverlay
+        <InventorySidebar
+          :inv_id="RecordSchema.inv_id"
+          @inv_id="(val) => (RecordSchema.inv_id = val)"
+          :name="RecordSchema.name"
+          @name="(val) => (RecordSchema.name = val)"
+          :size="RecordSchema.size"
+          @size="(val) => (RecordSchema.size = val)"
+          :stock="RecordSchema.stock"
+          @stock="(val) => (RecordSchema.stock = val)"
+          :unit="RecordSchema.unit"
+          @unit="(val) => (RecordSchema.unit = val)"
+          :address="RecordSchema.supplier"
+          @address="(val) => (RecordSchema.supplier = val)"
+          :delivery_duration="RecordSchema.delivery_duration"
+          @delivery_duration="(val) => (RecordSchema.delivery_duration = val)"
+          :delivery_delay="RecordSchema.delivery_delay"
+          @delivery_delay="(val) => (RecordSchema.delivery_delay = val)"
+        >
+        </InventorySidebar> </SidebarOverlay
     ></Transition>
 
     <!-- Delete overlay -->
