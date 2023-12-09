@@ -22,28 +22,28 @@ defineProps<{
       type="text"
       :value="inv_id"
       @update="(value) => $emit('inv_id', value)"
-    ></InputComponent>
+    />
     <InputComponent
       label="Name"
       placeholder="item name"
       type="text"
       :value="name"
       @update="(value) => $emit('name', value)"
-    ></InputComponent>
+    />
     <InputComponent
       label="Size"
       placeholder="item size"
       type="number"
       :value="size"
       @update="(value) => $emit('size', value)"
-    ></InputComponent>
+    />
     <InputComponent
       label="Stock"
       placeholder="stock count"
       type="number"
       :value="stock"
       @update="(value) => $emit('stock', value)"
-    ></InputComponent>
+    />
     <SelectComponent
       label="Unit"
       :options="['gram', 'ml', 'pcs', 'slice']"
@@ -65,13 +65,13 @@ defineProps<{
       type="number"
       :value="delivery_duration"
       @update="(value) => $emit('delivery_duration', value)"
-    ></InputComponent>
+    />
     <InputComponent
       label="Estimated delay (day)"
       placeholder="delivery delay"
       type="number"
       :value="delivery_delay"
       @update="(value) => $emit('delivery_delay', value)"
-    ></InputComponent>
+    />
   </div>
 </template>
