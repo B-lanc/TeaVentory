@@ -14,8 +14,18 @@ const RecordSchema = ref({
   stock: 0,
   supplier: '',
   delivery_duration: 0,
-  delivery_delay: 0
+  delivery_delay: 0,
 })
+const RecordSchemaZeroer = ()=>{
+  RecordSchema.value.inv_id = ''
+  RecordSchema.value.name = ''
+  RecordSchema.value.size = 0
+  RecordSchema.value.unit = ''
+  RecordSchema.value.stock = 0
+  RecordSchema.value.supplier = ''
+  RecordSchema.value.delivery_duration = 0
+  RecordSchema.value.delivery_delay = 0
+}
 
 const createOverlayActive = ref(false)
 const createOverlayToggle = () => {
@@ -29,6 +39,7 @@ const createRecord = async () => {
     alert(`Failed to submit data.... ${e}`)
   }
   createOverlayActive.value = false
+  RecordSchemaZeroer()
 }
 
 
@@ -78,7 +89,7 @@ onMounted(async () => {
       </div>
     </div>
     <div class="h-full w-full bg-blue-50 px-5 text-center">
-      <div v-if="records">
+      <div v-if="records" class="sm:text-xs md:text-sm text-md">
         <div class="grid grid-cols-12 border-2 border-black bg-blue-200">
           <div class="col-span-3 m-auto py-1">
             <div class="border-b border-black">Name</div>
