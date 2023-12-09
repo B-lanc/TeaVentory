@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
+  title: string
   confirm: () => void
   toggle: () => void
 }>()
@@ -11,6 +12,7 @@ const props = defineProps<{
     class="fixed left-0 top-0 z-10 h-screen w-screen bg-black bg-opacity-40"
   >
     <div class="fixed right-0 z-20 h-screen w-2/5 overflow-y-scroll bg-slate-200">
+      <h2 class="p-4 text-center text-3xl font-semibold">{{ title }}</h2>
       <slot></slot>
       <div class="flex justify-center">
         <button
@@ -23,7 +25,7 @@ const props = defineProps<{
           @click="confirm()"
           class="m-4 h-9 w-16 rounded-sm bg-red-950 text-white hover:bg-red-600"
         >
-          create
+          confirm
         </button>
       </div>
     </div>
