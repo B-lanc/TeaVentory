@@ -2,6 +2,7 @@
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import pb from '@/pocketbaseConnection'
+import InputComponent from '@/components/InputComponent.vue'
 
 const router = useRouter()
 const username = ref('')
@@ -25,25 +26,21 @@ const loginButtonPress = async () => {
   <div class="flex h-screen items-center justify-center bg-slate-100">
     <div class="w-96 rounded-md bg-white px-8 py-12">
       <h1 class="pb-5 text-center text-4xl font-bold">Login Page</h1>
-      <div>
-        <label class="block">Username:</label>
-        <input
-          type="text"
-          class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
-          v-model="username"
-          placeholder="username"
-        />
-      </div>
-      <div class="mt-3">
-        <label class="block">Password:</label>
-        <input
-          type="password"
-          class="w-full rounded-md border-2 px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
-          v-model="password"
-          placeholder="password"
-          @keyup.enter="loginButtonPress()"
-        />
-      </div>
+      <InputComponent
+        label="Username:"
+        placeholder="username"
+        type="text"
+        :value="username"
+        @update="(val) => (username = val)"
+      />
+      <InputComponent
+        label="Password"
+        placeholder="password"
+        type="password"
+        :value="password"
+        @update="(val) => (password = val)"
+        @keyup.enter="loginButtonPress()"
+      />
       <div class="mt-5">
         <button
           class="w-full rounded-md border bg-green-500 py-2 hover:bg-green-400"
