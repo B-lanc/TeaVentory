@@ -3,12 +3,6 @@ const props = defineProps<{
   confirm: () => void
   toggle: () => void
 }>()
-const createRecord = () => {
-  props.confirm()
-}
-const cancel = () => {
-  props.toggle()
-}
 </script>
 
 <template>
@@ -20,13 +14,13 @@ const cancel = () => {
       <slot></slot>
       <div class="flex justify-center">
         <button
-          @click="cancel()"
+          @click="toggle()"
           class="m-4 h-9 w-16 rounded-sm bg-gray-300 text-black hover:bg-gray-200"
         >
           cancel
         </button>
         <button
-          @click="createRecord()"
+          @click="confirm()"
           class="m-4 h-9 w-16 rounded-sm bg-red-950 text-white hover:bg-red-600"
         >
           create
