@@ -10,7 +10,7 @@ const props = defineProps<{
     @click.self="toggle()"
     class="fixed left-0 top-0 z-10 h-screen w-screen bg-black bg-opacity-40"
   >
-    <div class="fixed right-0 z-20 h-screen w-2/5 bg-slate-200 overflow-y-scroll">
+    <div class="fixed right-0 z-20 h-screen w-2/5 overflow-y-scroll bg-slate-200">
       <slot></slot>
       <div class="flex justify-center">
         <button
