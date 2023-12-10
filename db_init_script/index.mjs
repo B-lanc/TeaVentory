@@ -143,32 +143,32 @@ await pb.collection('users').authWithPassword('Testing', 'j1j2j3j4')
 
 
 
-//transactions db
-const items = await pb.collection('items').getFullList()
-fs.createReadStream('./transactions.csv')
-    .pipe(parse({ delimiter: ",", from_line: 2 }))
-    .on("data", async (row)=>{
-        const d = row[1].split("/")
-        const t = row[2].split(":")
-        const dt = new Date(d[2], d[1], d[0], t[0], t[1], t[2])
+// //transactions db
+// const items = await pb.collection('items').getFullList()
+// fs.createReadStream('./transactions.csv')
+//     .pipe(parse({ delimiter: ",", from_line: 2 }))
+//     .on("data", async (row)=>{
+//         const d = row[1].split("/")
+//         const t = row[2].split(":")
+//         const dt = new Date(d[2], d[1], d[0], t[0], t[1], t[2])
 
 
-        try{
-            const item_id = items.filter((item)=> item.item_id === row[7])[0].id
-            const topping_id = !row[8] ? null : items.filter((item)=> item.item_id === row[8])[0].id
+//         try{
+//             const item_id = items.filter((item)=> item.item_id === row[7])[0].id
+//             const topping_id = !row[8] ? null : items.filter((item)=> item.item_id === row[8])[0].id
 
-            const newRecord = {
-                receipt: row[0],
-                datetime: dt,
-                item_id: item_id,
-                topping_id: topping_id,
-                qty: parseInt(row[9])
-            }
-            await pb.collection('transactions').create(newRecord, {requestKey:null})
-        } catch (e) {
-            console.log(e)
-        }
-     })
+//             const newRecord = {
+//                 receipt: row[0],
+//                 datetime: dt,
+//                 item_id: item_id,
+//                 topping_id: topping_id,
+//                 qty: parseInt(row[9])
+//             }
+//             await pb.collection('transactions').create(newRecord, {requestKey:null})
+//         } catch (e) {
+//             console.log(e)
+//         }
+//      })
 
 
 
@@ -177,7 +177,13 @@ fs.createReadStream('./transactions.csv')
 
 
 // //somehow battery died while I was sending the transactions, so gotta delete first
-// const records = await pb.collection('transactions').getFullList()
-// records.forEach(async(rec)=>{
-//     await pb.collection('transactions').delete(rec.id, {requestKey:null});
+// for (let i = 0; i<10; i++){
+// const records = await pb.collection('transactions').getList(i+1, 3000)
+// records.items.forEach(async(rec)=>{
+//     try{
+//         await pb.collection('transactions').delete(rec.id, {requestKey:null});
+//     } catch (e){
+//         console.log(e)
+//     }
 // })
+// }
