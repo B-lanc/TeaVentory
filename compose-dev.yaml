@@ -12,7 +12,9 @@ services:
     depends_on:
       - backend-dev
   backend-dev:
-    build: ./backend
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile-dev
     volumes:
       - ./backend:/app
     ports:
