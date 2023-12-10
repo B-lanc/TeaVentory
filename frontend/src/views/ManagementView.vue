@@ -42,7 +42,7 @@ const loadData = async () => {
 
     ItemCount.value = Object.entries(ItemCount.value)
 
-    const D = {}
+    const D:any = {}
     ItemCount.value.forEach((it: any) => {
       fullRecipe.value.forEach((ma: any) => {
         if (it[0] == ma.item_id) {
