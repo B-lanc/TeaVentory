@@ -15,7 +15,7 @@ defineProps<{
       class="w-full rounded-md border-2 bg-white px-2 py-3 focus:outline-none focus:ring-1 focus:ring-blue-800"
     >
       <option disabled value=""></option>
-      <option v-for="op in options">{{ op }}</option>
+      <option v-for="op in options" :key="op">{{ op }}</option>
     </select>
   </div>
 </template>
