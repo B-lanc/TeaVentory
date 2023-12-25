@@ -16,4 +16,4 @@ Build production image:
 
 
 Dev script: (run everything locally etc)
-> docker compose -f compose-dev.yaml up
+> docker compose -f dev-compose.yaml up
