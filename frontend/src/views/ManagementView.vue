@@ -27,7 +27,7 @@ const loadData = async () => {
     const transactions = await pb.collection('transactions').getFullList({
       filter: `datetime >= "${startDate.value}" && datetime <= "${endDate.value}"`
     })
-    ItemCount.value = transactions.reduce((acc: any, curr: any) => {
+    ItemCount.value = transactions.reduce((acc: any, curr) => {
       acc[curr.item_id] = acc[curr.item_id]
         ? acc[curr.item_id] + curr.qty / duration.value
         : curr.qty / duration.value
@@ -39,10 +39,11 @@ const loadData = async () => {
       }
       return acc
     }, {})
+    console.log(ItemCount.value)
 
     ItemCount.value = Object.entries(ItemCount.value)
 
-    const D:any = {}
+    const D: any = {}
     ItemCount.value.forEach((it: any) => {
       fullRecipe.value.forEach((ma: any) => {
         if (it[0] == ma.item_id) {
@@ -65,14 +66,21 @@ const loadData = async () => {
     })
 
     inventory.value.forEach((el: any) => {
+      const dd = parseInt(el.delivery_delay, 10)
+      const ddur = parseInt(el.delivery_duration, 10)
+      const forecast = parseInt(forecastPeriod.value, 10)
       const man = {
         inv_id: el.inv_id,
         name: el.name,
         unit: el.unit,
         stock: el.stock,
         supplier: el.supplier,
-        need: D[el.id] * (forecastPeriod.value + el.delivery_delay),
-        rop: D[el.id] * (el.delivery_duration + el.delivery_duration)
+        size: el.size,
+        need: D[el.id] * (forecast + dd),
+        rop: D[el.id] * (ddur + dd),
+        D: D[el.id],
+        dd: dd,
+        forecast: forecast
       }
       management.value.push(man)
     })
@@ -115,7 +123,7 @@ onMounted(async () => {
         placeholder="forecast period"
         type="number"
         :value="forecastPeriod"
-        @update="(val) => (forecastPeriod = val)"
+        @update="(val) => (forecastPeriod = parseInt(val, 10))"
       />
       <button
         @click="loadData()"
@@ -146,7 +154,7 @@ onMounted(async () => {
           </div>
           <h4 class="col-span-1 m-auto py-1">Note</h4>
           <div class="col-span-2 m-auto py-1">
-            <div class="border-b border-black">To Buy</div>
+            <div class="border-b border-black">EOQ</div>
             <div>Unit</div>
           </div>
         </div>
@@ -162,21 +170,25 @@ onMounted(async () => {
           </div>
           <h4 class="col-span-3 m-auto">{{ item.supplier }}</h4>
           <div class="col-span-1 m-auto">
-            <div class="border-b border-black">{{ item.stock }}</div>
-            <div>{{ item.unit }}</div>
+            <div class="border-b border-black">{{ (item.stock / item.size).toFixed(2) }}</div>
+            <div>pcs</div>
           </div>
           <div class="col-span-2 m-auto">
-            <div class="border-b border-black">{{ item.need.toFixed(2) }}</div>
-            <div>{{ item.unit }}</div>
+            <div class="border-b border-black">{{ (item.need / item.size).toFixed(2) }}</div>
+            <div>pcs</div>
           </div>
           <div class="col-span-2 m-auto">
-            <div class="border-b border-black">{{ item.rop.toFixed(2) }}</div>
-            <div>{{ item.unit }}</div>
+            <div class="border-b border-black">
+              {{ item.supplier === 'MENANTEA' ? 0 : (item.rop / item.size).toFixed(2) }}
+            </div>
+            <div>pcs</div>
           </div>
           <h4 class="col-span-1 m-auto">{{ item.stock <= item.rop ? 'RESTOCK' : 'OK' }}</h4>
           <div class="col-span-2 m-auto">
-            <div class="border-b border-black">{{ (item.need - item.stock).toFixed(2) }}</div>
-            <div>{{ item.unit }}</div>
+            <div class="border-b border-black">
+              {{ ((item.need - item.stock) / item.size).toFixed(2) }}
+            </div>
+            <div>pcs</div>
           </div>
         </div>
       </div>
