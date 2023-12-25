@@ -9,6 +9,7 @@
     "test:unit": "vitest",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
+    "typegen": "pocketbase-typegen --db ../backend/pb_data/data.db --out ./src/types/pocketbase-types.ts",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/"
   },
@@ -32,6 +33,7 @@
     "eslint-plugin-vue": "^9.17.0",
     "jsdom": "^22.1.0",
     "npm-run-all2": "^6.1.1",
+    "pocketbase-typegen": "^1.2.1",
     "postcss": "^8.4.32",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.7",
