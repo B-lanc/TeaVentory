@@ -1,7 +1,8 @@
 import PocketBase from 'pocketbase'
 
-console.log(import.meta.env.VITE_DOMAIN_NAME)
-const url = `http://${import.meta.env.VITE_DOMAIN_NAME || 'localhost'}:8090`
+const domain = import.meta.env.VITE_DOMAIN_NAME || 'localhost'
+const port = domain === 'localhost' ? 8080 : 8443
+const url = `http://${domain || 'localhost'}:${port}`
 const pb = new PocketBase(url)
 
 export default pb
