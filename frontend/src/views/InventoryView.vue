@@ -4,9 +4,13 @@ import SidebarOverlay from '@/components/SidebarOverlay.vue'
 import ConfirmOverlay from '@/components/ConfirmOverlay.vue'
 import InventorySidebar from '@/components/InventorySidebar.vue'
 import { ref, onMounted } from 'vue'
+import type { Ref } from 'vue'
+
+import type { ListResult } from 'pocketbase'
+import type { InventoryResponse, InventoryRecord } from '@/types/pocketbase-types'
 
 const errorMessage = ref('Loading... Please Wait')
-const records = ref()
+const records: Ref<ListResult<InventoryResponse> | undefined> = ref()
 const RecordSchema = ref({
   inv_id: '',
   name: '',
@@ -35,7 +39,7 @@ const createOverlayToggle = () => {
 const createRecord = async () => {
   try {
     const newRecord = await pb.collection('inventory').create(RecordSchema.value)
-    records.value.items.push(newRecord)
+    records.value!.items.push(newRecord)
   } catch (e) {
     alert(`Failed to submit data.... ${e}`)
   }
@@ -55,7 +59,7 @@ const deleteOverlayInit = (id: string, inv_id: string, name: string) => {
   deleteOverlayFunction.value = () => {
     try {
       pb.collection('inventory').delete(id)
-      records.value.items = records.value.items.filter((item: any) => item.id !== id)
+      records.value!.items = records.value!.items.filter((item) => item.id !== id)
       deleteOverlayToggle()
     } catch (e) {
       alert('Could not delete record')
@@ -78,20 +82,20 @@ const EditRecordSchema = ref({
 const editOverlayToggle = () => {
   editOverlayActive.value = !editOverlayActive.value
 }
-const editOverlayInit = (item: any) => {
+const editOverlayInit = (item: InventoryRecord) => {
   editOverlayActive.value = true
   EditRecordSchema.value.inv_id = item.inv_id
   EditRecordSchema.value.name = item.name
   EditRecordSchema.value.size = item.size
-  EditRecordSchema.value.stock = item.stock
+  EditRecordSchema.value.stock = item.stock!
   EditRecordSchema.value.unit = item.unit
-  EditRecordSchema.value.supplier = item.supplier
-  EditRecordSchema.value.delivery_duration = item.delivery_duration
-  EditRecordSchema.value.delivery_delay = item.delivery_delay
+  EditRecordSchema.value.supplier = item.supplier!
+  EditRecordSchema.value.delivery_duration = item.delivery_duration!
+  EditRecordSchema.value.delivery_delay = item.delivery_delay!
   editOverlayFunction.value = () => {
     try {
       pb.collection('inventory').update(item.id, EditRecordSchema.value)
-      records.value.items = records.value.items.map((it: any) => {
+      records.value!.items = records.value!.items.map((it) => {
         if (it.id === item.id) {
           it.inv_id = EditRecordSchema.value.inv_id
           it.name = EditRecordSchema.value.name
@@ -115,7 +119,6 @@ onMounted(async () => {
   try {
     records.value = await pb.collection('inventory').getList(1, 500, {})
   } catch (e) {
-    records.value = ''
     errorMessage.value = 'Could not load the inventory'
   }
 })
