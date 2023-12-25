@@ -1,0 +1,26 @@
+services:
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        DOMAIN_NAME: ${DOMAIN_NAME}
+    ports: 
+      - 8081:80
+    depends_on:
+      - backend
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
+    ports:
+      - 8090:8090
+  reverse-proxy-local:
+    build:
+      context: ./reverse-proxy-local
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+      - 8080:8080
