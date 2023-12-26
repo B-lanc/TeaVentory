@@ -68,7 +68,7 @@ const loadData = async () => {
     inventory.value.forEach((el: any) => {
       const dd = parseInt(el.delivery_delay, 10)
       const ddur = parseInt(el.delivery_duration, 10)
-      const forecast = parseInt(forecastPeriod.value, 10)
+      const forecast = forecastPeriod.value
       const man = {
         inv_id: el.inv_id,
         name: el.name,

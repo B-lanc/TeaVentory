@@ -7,7 +7,7 @@ import { ref, onMounted } from 'vue'
 import type { Ref } from 'vue'
 
 import type { ListResult } from 'pocketbase'
-import type { InventoryResponse, InventoryRecord } from '@/types/pocketbase-types'
+import type { InventoryResponse } from '@/types/pocketbase-types'
 
 const errorMessage = ref('Loading... Please Wait')
 const records: Ref<ListResult<InventoryResponse> | undefined> = ref()
@@ -82,7 +82,7 @@ const EditRecordSchema = ref({
 const editOverlayToggle = () => {
   editOverlayActive.value = !editOverlayActive.value
 }
-const editOverlayInit = (item: InventoryRecord) => {
+const editOverlayInit = (item: InventoryResponse) => {
   editOverlayActive.value = true
   EditRecordSchema.value.inv_id = item.inv_id
   EditRecordSchema.value.name = item.name
@@ -126,7 +126,7 @@ onMounted(async () => {
 
 <template>
   <div class="flex h-screen flex-col">
-    <div class="flex justify-between font-serif">
+    <div class="flex justify-between font-sans">
       <h2 class="px-7 py-7 text-3xl">Inventory</h2>
       <div class="my-auto">
         <button
