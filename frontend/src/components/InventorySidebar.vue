@@ -35,14 +35,14 @@ defineProps<{
       placeholder="item size"
       type="number"
       :value="size"
-      @update="(value) => $emit('size', value)"
+      @update="(value) => $emit('size', parseInt(value, 10))"
     />
     <InputComponent
       label="Stock"
       placeholder="stock count"
       type="number"
       :value="stock"
-      @update="(value) => $emit('stock', value)"
+      @update="(value) => $emit('stock', parseInt(value, 10))"
     />
     <SelectComponent
       label="Unit"
@@ -64,14 +64,14 @@ defineProps<{
       placeholder="delivery time"
       type="number"
       :value="delivery_duration"
-      @update="(value) => $emit('delivery_duration', value)"
+      @update="(value) => $emit('delivery_duration', parseInt(value, 10))"
     />
     <InputComponent
       label="Estimated delay (day)"
       placeholder="delivery delay"
       type="number"
       :value="delivery_delay"
-      @update="(value) => $emit('delivery_delay', value)"
+      @update="(value) => $emit('delivery_delay', parseInt(value, 10))"
     />
   </div>
 </template>
