@@ -3,13 +3,15 @@ import InputComponent from '@/components/InputComponent.vue'
 import pb from '@/pocketbaseConnection'
 import { onMounted, ref } from 'vue'
 
+import type { FullRecipeResponse, InventoryResponse } from '@/types/pocketbase-types'
+
 const startDate = ref(new Date().toISOString().slice(0, 10))
 const endDate = ref(new Date().toISOString().slice(0, 10))
 const forecastPeriod = ref(0)
 const ItemCount = ref()
 const duration = ref(0)
-const fullRecipe = ref()
-const inventory = ref()
+const fullRecipe = ref<FullRecipeResponse<unknown>[]>()
+const inventory = ref<InventoryResponse<unknown>[]>()
 const management: any = ref([])
 const loadingMessage = ref('Nothing Loaded Yet')
 
@@ -45,7 +47,7 @@ const loadData = async () => {
 
     const D: any = {}
     ItemCount.value.forEach((it: any) => {
-      fullRecipe.value.forEach((ma: any) => {
+      fullRecipe.value!.forEach((ma: any) => {
         if (it[0] == ma.item_id) {
           if (ma.inv_id) {
             if (D[ma.inv_id]) {

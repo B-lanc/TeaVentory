@@ -4,14 +4,13 @@ import SidebarOverlay from '@/components/SidebarOverlay.vue'
 import ConfirmOverlay from '@/components/ConfirmOverlay.vue'
 import InventorySidebar from '@/components/InventorySidebar.vue'
 import { ref, onMounted } from 'vue'
-import type { Ref } from 'vue'
 
 import type { ListResult } from 'pocketbase'
-import type { InventoryResponse } from '@/types/pocketbase-types'
+import type { InventoryResponse, InventoryRecord } from '@/types/pocketbase-types'
 
 const errorMessage = ref('Loading... Please Wait')
-const records: Ref<ListResult<InventoryResponse> | undefined> = ref()
-const RecordSchema = ref({
+const records = ref<ListResult<InventoryResponse>>()
+const RecordSchema = ref<InventoryRecord>({
   inv_id: '',
   name: '',
   size: 0,
