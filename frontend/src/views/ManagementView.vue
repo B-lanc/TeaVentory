@@ -134,8 +134,8 @@ onMounted(async () => {
         Load
       </button>
     </div>
-    <div class="h-full w-full overflow-auto bg-blue-50 px-5 text-center">
-      <div v-if="management.length" class="text-md sm:text-xs md:text-sm">
+    <div class="w-full overflow-hidden bg-blue-50 px-5 text-center">
+      <div v-if="management.length" class="text-md flex h-full flex-col sm:text-xs md:text-sm">
         <div class="grid grid-cols-12 border-2 border-black bg-blue-200">
           <div class="col-span-1 m-auto py-1">
             <div class="border-b border-black">Name</div>
@@ -160,37 +160,39 @@ onMounted(async () => {
             <div>Unit</div>
           </div>
         </div>
-        <div
-          v-for="(item, index) in management"
-          :key="item.id"
-          class="grid grid-cols-12 border-x-2 border-b-2 border-black py-1 font-mono font-light"
-          :class="index % 2 ? 'bg-blue-100' : 'bg-blue-50'"
-        >
-          <div class="col-span-1 m-auto">
-            <div class="border-b border-black">{{ item.name }}</div>
-            <div>{{ item.inv_id }}</div>
-          </div>
-          <h4 class="col-span-3 m-auto">{{ item.supplier }}</h4>
-          <div class="col-span-1 m-auto">
-            <div class="border-b border-black">{{ (item.stock / item.size).toFixed(2) }}</div>
-            <div>pcs</div>
-          </div>
-          <div class="col-span-2 m-auto">
-            <div class="border-b border-black">{{ (item.need / item.size).toFixed(2) }}</div>
-            <div>pcs</div>
-          </div>
-          <div class="col-span-2 m-auto">
-            <div class="border-b border-black">
-              {{ item.supplier === 'MENANTEA' ? 0 : (item.rop / item.size).toFixed(2) }}
+        <div class="overflow-auto">
+          <div
+            v-for="(item, index) in management"
+            :key="item.id"
+            class="grid grid-cols-12 border-x-2 border-b-2 border-black py-1 font-mono font-light"
+            :class="index % 2 ? 'bg-blue-100' : 'bg-blue-50'"
+          >
+            <div class="col-span-1 m-auto">
+              <div class="border-b border-black">{{ item.name }}</div>
+              <div>{{ item.inv_id }}</div>
             </div>
-            <div>pcs</div>
-          </div>
-          <h4 class="col-span-1 m-auto">{{ item.stock <= item.rop ? 'RESTOCK' : 'OK' }}</h4>
-          <div class="col-span-2 m-auto">
-            <div class="border-b border-black">
-              {{ ((item.need - item.stock) / item.size).toFixed(2) }}
+            <h4 class="col-span-3 m-auto">{{ item.supplier }}</h4>
+            <div class="col-span-1 m-auto">
+              <div class="border-b border-black">{{ (item.stock / item.size).toFixed(2) }}</div>
+              <div>pcs</div>
             </div>
-            <div>pcs</div>
+            <div class="col-span-2 m-auto">
+              <div class="border-b border-black">{{ (item.need / item.size).toFixed(2) }}</div>
+              <div>pcs</div>
+            </div>
+            <div class="col-span-2 m-auto">
+              <div class="border-b border-black">
+                {{ item.supplier === 'MENANTEA' ? 0 : (item.rop / item.size).toFixed(2) }}
+              </div>
+              <div>pcs</div>
+            </div>
+            <h4 class="col-span-1 m-auto">{{ item.stock <= item.rop ? 'RESTOCK' : 'OK' }}</h4>
+            <div class="col-span-2 m-auto">
+              <div class="border-b border-black">
+                {{ ((item.need - item.stock) / item.size).toFixed(2) }}
+              </div>
+              <div>pcs</div>
+            </div>
           </div>
         </div>
       </div>

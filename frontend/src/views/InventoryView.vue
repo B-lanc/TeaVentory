@@ -136,8 +136,8 @@ onMounted(async () => {
         </button>
       </div>
     </div>
-    <div class="h-full w-full overflow-auto bg-blue-50 px-5 text-center">
-      <div v-if="records" class="text-md sm:text-xs md:text-sm">
+    <div class="w-full overflow-hidden bg-blue-50 px-5 text-center">
+      <div v-if="records" class="text-md flex h-full flex-col sm:text-xs md:text-sm">
         <div class="grid grid-cols-12 border-2 border-black bg-blue-200">
           <div class="col-span-3 m-auto py-1">
             <div class="border-b border-black">Name</div>
@@ -151,38 +151,40 @@ onMounted(async () => {
           <h4 class="col-span-1 m-auto py-1">Estimated Delay (day)</h4>
           <h4 class="col-span-1 m-auto py-1">Action</h4>
         </div>
-        <div
-          v-for="(item, index) in records.items"
-          :key="item.id"
-          class="grid grid-cols-12 border-x-2 border-b-2 border-black py-1 font-mono font-light"
-          :class="index % 2 ? 'bg-blue-100' : 'bg-blue-50'"
-        >
-          <div class="col-span-3 m-auto">
-            <div class="border-b border-black">{{ item.name }}</div>
-            <div>{{ item.inv_id }}</div>
-          </div>
-          <h4 class="col-span-3 m-auto">{{ item.supplier }}</h4>
-          <h4 class="col-span-1 m-auto">{{ item.size }}</h4>
-          <h4 class="col-span-1 m-auto">{{ item.stock }}</h4>
-          <h4 class="col-span-1 m-auto">{{ item.unit }}</h4>
-          <h4 class="col-span-1 m-auto">{{ item.delivery_duration }}</h4>
-          <h4 class="col-span-1 m-auto">{{ item.delivery_delay }}</h4>
-          <div class="col-span-1 my-auto">
-            <div>
-              <button
-                @click="editOverlayInit(item)"
-                class="my-auto w-10/12 rounded-sm bg-green-400 transition-colors hover:bg-green-600 hover:text-white"
-              >
-                Edit
-              </button>
+        <div class="overflow-auto">
+          <div
+            v-for="(item, index) in records.items"
+            :key="item.id"
+            class="grid grid-cols-12 border-x-2 border-b-2 border-black py-1 font-mono font-light"
+            :class="index % 2 ? 'bg-blue-100' : 'bg-blue-50'"
+          >
+            <div class="col-span-3 m-auto">
+              <div class="border-b border-black">{{ item.name }}</div>
+              <div>{{ item.inv_id }}</div>
             </div>
-            <div>
-              <button
-                @click="deleteOverlayInit(item.id, item.inv_id, item.name)"
-                class="my-auto w-10/12 rounded-sm bg-red-400 transition-colors hover:bg-red-700 hover:text-white"
-              >
-                Delete
-              </button>
+            <h4 class="col-span-3 m-auto">{{ item.supplier }}</h4>
+            <h4 class="col-span-1 m-auto">{{ item.size }}</h4>
+            <h4 class="col-span-1 m-auto">{{ item.stock }}</h4>
+            <h4 class="col-span-1 m-auto">{{ item.unit }}</h4>
+            <h4 class="col-span-1 m-auto">{{ item.delivery_duration }}</h4>
+            <h4 class="col-span-1 m-auto">{{ item.delivery_delay }}</h4>
+            <div class="col-span-1 my-auto">
+              <div>
+                <button
+                  @click="editOverlayInit(item)"
+                  class="my-auto w-10/12 rounded-sm bg-green-400 transition-colors hover:bg-green-600 hover:text-white"
+                >
+                  Edit
+                </button>
+              </div>
+              <div>
+                <button
+                  @click="deleteOverlayInit(item.id, item.inv_id, item.name)"
+                  class="my-auto w-10/12 rounded-sm bg-red-400 transition-colors hover:bg-red-700 hover:text-white"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
         </div>
